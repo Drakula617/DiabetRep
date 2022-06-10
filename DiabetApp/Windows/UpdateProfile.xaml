@@ -3,41 +3,42 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:DiabetApp.Windows"
-        mc:Ignorable="d"
-        Title="UpdateProfile" Height="1080" Width="1920">
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="UpdateProfile" Height="900" Width="1100">
     <StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0 0 0 0">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Horizontal" Margin="20">
-                    <TextBlock Text="Название " FontSize="30"></TextBlock>
+                    <TextBlock Text="Название " FontSize="20"></TextBlock>
                     <TextBlock Text="{Binding Selected_Profile.Name}" FontSize="20" FontWeight="Bold" Margin="20 0 0 0"></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="ФИО" FontSize="35" Width="200" Margin="20"></TextBlock>
-                    <TextBox Text="{Binding Selected_Person.FName, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0" FontSize="35" Width="200"></TextBox>
-                    <TextBox Text="{Binding Selected_Person.LName, UpdateSourceTrigger=PropertyChanged}" Margin="20 0 0 0" FontSize="35" Width="200"></TextBox>
-                    <TextBox Text="{Binding Selected_Person.MName, UpdateSourceTrigger=PropertyChanged}" Margin="20 0 0 0" FontSize="35" Width="200"></TextBox>
+                <StackPanel Orientation="Horizontal" Margin="20">
+                    <TextBlock Text="ФИО" FontSize="20" Width="70"></TextBlock>
+                    <TextBlock Text="{Binding Selected_Person.FName, UpdateSourceTrigger=PropertyChanged}" Margin="20 0 0 0" FontSize="20" MinWidth="100"></TextBlock>
+                    <TextBlock Text="{Binding Selected_Person.LName, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0" FontSize="20" MinWidth="100"></TextBlock>
+                    <TextBlock Text="{Binding Selected_Person.MName, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 0 0" FontSize="20"></TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Вес" FontSize="35" Width="200" Margin="20"></TextBlock>
-                    <TextBox Text="{Binding Selected_Person.Weight, StringFormat=0 кг}" Width="100" Margin="30 0 0 0" FontSize="35" Cursor="Arrow"></TextBox>
+                <StackPanel Orientation="Horizontal" Margin="20">
+                    <TextBlock Text="Вес" FontSize="20" Width="70"></TextBlock>
+                    <TextBlock Text="{Binding Selected_Person.Weight, StringFormat=0 кг}" Width="100" Margin="30 0 0 0" FontSize="20" Cursor="Arrow"></TextBlock>
                 </StackPanel>
             </StackPanel>
             <StackPanel Orientation="Vertical" Margin="50 0 0 0">
-                <TextBlock Text="Параметры для расчетов" FontSize="35"></TextBlock>
+                <TextBlock Text="Параметры для расчетов" FontSize="20"></TextBlock>
                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
-                    <StackPanel Orientation="Horizontal" Margin="20">
-                        <TextBlock Text="Чувствительность " FontSize="30" ></TextBlock>
-                        <TextBlock Text="{Binding Selected_Profile.Sensitivity}" FontSize="25" Margin="20 0 0 0"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Чувствительность " FontSize="20" ></TextBlock>
+                        <TextBox Text="{Binding Selected_Profile.Sensitivity,ValidatesOnDataErrors=False}" FontSize="20" Margin="20 0 0 20"></TextBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="20">
-                        <TextBlock Text="Мин ГК " FontSize="30" ></TextBlock>
-                        <TextBlock Text="{Binding Selected_Profile.MinGlucose}" FontSize="25"  Margin="20 0 0 0"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Мин ГК " FontSize="20" ></TextBlock>
+                        <TextBox Text="{Binding Selected_Profile.MinGlucose,ValidatesOnDataErrors=False}" FontSize="20"  Margin="20 0 0 20"></TextBox>
                     </StackPanel>
-                    <StackPanel Orientation="Horizontal" Margin="20">
-                        <TextBlock Text="Макс ГК " FontSize="30" ></TextBlock>
-                        <TextBlock Text="{Binding Selected_Profile.MaxGlucose}" FontSize="25"  Margin="20 0 0 0"></TextBlock>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="Макс ГК " FontSize="20" ></TextBlock>
+                        <TextBox Text="{Binding Selected_Profile.MaxGlucose,ValidatesOnDataErrors=False}" FontSize="20"  Margin="20 0 0 20"></TextBox>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         
@@ -45,15 +46,22 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-        <StackPanel Orientation="Horizontal" Margin="100 20 0 0" x:Name="CoefStack">
+        <StackPanel Orientation="Horizontal" Margin="30 20 0 0" x:Name="CoefStack">
             <StackPanel Orientation="Vertical">
-                <Button x:Name="newCarbCoef" Content="Новые коэффициенты" Width="300" Margin="20" FontSize="20" Height="40" Click="NewCarbCoef" Cursor="Hand"></Button>
-                <TextBlock Text="Углеводные коэффициенты" FontSize="30" Margin="50 0 0 0"></TextBlock>
-                <DataGrid x:Name="carbList" Width="800" Margin="20" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False"> 
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="autoCarb_Coef" Width="250" Height="70" Click="autoCarb_Coef_Click" HorizontalAlignment="Left" Margin="30 20 0 20" Cursor="Hand">
+                        <TextBlock Text="Автоматически рассчитать и выставить угл.коэффициенты" TextWrapping="Wrap" Width="200" TextAlignment="Center" >
+
+                        </TextBlock>
+                    </Button>
+                    <Button x:Name="newCarbCoef" Content="Новый УК" Height="70" FontSize="20" Click="NewCarbCoef" Cursor="Hand" Margin="50 0 0 0"></Button>
+                </StackPanel>
+                <TextBlock Text="Углеводные коэффициенты" FontSize="20" Margin="50 0 0 0"></TextBlock>
+                <DataGrid x:Name="carbList" MaxHeight="250" Width="410" Margin="20" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False"> 
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="С" Width="200" FontSize="30"></TextBlock>
+                                <TextBlock Text="С" Width="50" FontSize="20"></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -62,9 +70,9 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="ДО" FontSize="30" Width="200" ></TextBlock>
+                                <TextBlock Text="ДО" FontSize="20" Width="50" ></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -74,9 +82,9 @@
                         </DataGridTemplateColumn>
                         <!--<DataGridTextColumn Header="С" Binding="{Binding Time_Begin}"></DataGridTextColumn>
                         <DataGridTextColumn Header="С" Binding="{Binding Time_End}"></DataGridTextColumn>-->
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="Значение" FontSize="30" Width="200"></TextBlock>
+                                <TextBlock Text="Значение" FontSize="20" Width="100"></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -87,15 +95,22 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </StackPanel>
-            <StackPanel Margin="100 0 0 0">
-                <Button x:Name="newBasal" Content="Новые коэффициенты" Width="300" Margin="20" FontSize="20" Height="40" Click="New_Basal" Cursor="Hand"></Button>
+            <StackPanel Margin="70 0 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="newBasal" Content="Новый базальный" Margin="20" FontSize="20" Height="70" Click="New_Basal" Cursor="Hand">
+                    </Button>
+                    <Button x:Name="autoBasal" Width="250" Height="70" Click="autoBasal_Click" Cursor="Hand" HorizontalAlignment="Right" Margin="0 20 0 20">
+                        <TextBlock Text="Автоматически рассчитать и выставить Базальный" TextWrapping="Wrap" Width="200" TextAlignment="Center" >
 
-                <TextBlock Text="Базальные коэффициенты" FontSize="30" Margin="50 0 0 0"></TextBlock>
-                <DataGrid x:Name="basalList" Width="800" Margin="20" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False">
+                        </TextBlock>
+                    </Button>
+                </StackPanel>
+                <TextBlock Text="Базальные коэффициенты" FontSize="20" Margin="50 0 0 0"></TextBlock>
+                <DataGrid x:Name="basalList" Width="410" MaxHeight="250" Margin="20" ItemsSource="{Binding}" AutoGenerateColumns="False" CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="С" Width="200" FontSize="30"></TextBlock>
+                                <TextBlock Text="С" FontSize="20" Width="130"></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -104,9 +119,9 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="ДО" FontSize="30" Width="200" ></TextBlock>
+                                <TextBlock Text="ДО" FontSize="20" Width="130" ></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
@@ -116,9 +131,9 @@
                         </DataGridTemplateColumn>
                         <!--<DataGridTextColumn Header="С" Binding="{Binding Time_Begin}"></DataGridTextColumn>
                         <DataGridTextColumn Header="С" Binding="{Binding Time_End}"></DataGridTextColumn>-->
-                        <DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="130">
                             <DataGridTemplateColumn.Header>
-                                <TextBlock Text="Значение" FontSize="30" Width="200"></TextBlock>
+                                <TextBlock Text="Значение" FontSize="20" Width="130"></TextBlock>
                             </DataGridTemplateColumn.Header>
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>

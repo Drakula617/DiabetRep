@@ -30,7 +30,7 @@ namespace DiabetApp.Pages
         private void Entrance_Click(object sender, RoutedEventArgs e)
         {
             Person person;
-            person = App.db.Person.ToList().Find(c => c.Login == login.Text && c.Password == password.Text);
+            person = App.db.Person.ToList().Find(c => c.Login == login.Text && c.Password == password.Password);
             if (person != null)
             {
                 App.diary_View = new Diary_View(person);

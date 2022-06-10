@@ -28,11 +28,42 @@ namespace DiabetApp
         public Nullable<float> Fats { get; set; }
         public Nullable<float> Carbohydrates { get; set; }
         public Nullable<int> ID_Type_Product { get; set; }
-        public Nullable<int> ID_Glycemic_Index { get; set; }
-    
+
+        public string ColorIndex
+        {
+            get
+            {
+                if (Glycemic_Index >= 70)
+                {
+                    return "#FF1F1F";
+                }
+                else if (Glycemic_Index <= 69 && Glycemic_Index >= 50)
+                {
+                    return "#e8fc05";
+                }
+                else
+                {
+                    return "#05fc0d";
+                }
+            }
+        }
+        public string ColorText
+        {
+            get
+            {
+                if (ColorIndex == "#FF1F1F")
+                {
+                    return "#fafcfa";
+                }
+                else
+                {
+                    return "#030303";
+                }
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Diary_Product> Diary_Product { get; set; }
-        public virtual Glycemic_Index Glycemic_Index1 { get; set; }
         public virtual Type_Product Type_Product { get; set; }
     }
 }

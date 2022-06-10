@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiabetApp.Windows"
         mc:Ignorable="d" xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" ResizeMode="NoResize"
         Title="CreateCoefficient" Height="650" Width="1200">
     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
         <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center">
@@ -62,7 +63,15 @@
                             </Image>
                         </Button>
                     </StackPanel>
-                    <TextBox x:Name="coeftext"  LostFocus="coeftext_LostFocus" GotFocus="coeftext_GotFocus" FontSize="20" Width="60" Margin="20 0 20 0" Cursor="Arrow"></TextBox>
+                    <TextBox x:Name="coeftext"
+                              materialDesign:TextFieldAssist.UnderlineBrush="#3d54fc"
+                                             materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
+                                             materialDesign:TextFieldAssist.HasClearButton="True"
+                                             materialDesign:TextFieldAssist.HasFilledTextField="True"
+                                             materialDesign:TextFieldAssist.UnderlineCornerRadius="5"
+                                             materialDesign:HintAssist.Hint="Коэф-т"
+                                            
+                             LostFocus="coeftext_LostFocus" GotFocus="coeftext_GotFocus" FontSize="20" Width="120" Margin="20 0 20 0" Cursor="Arrow"></TextBox>
 
             </StackPanel>
             </Border>
@@ -74,7 +83,7 @@
 
         </StackPanel>
         <StackPanel Orientation="Vertical" >
-            <TextBlock Text="Список измененных коэффициентов" Margin="20" HorizontalAlignment="Center" FontWeight="Medium" FontSize="20"></TextBlock>
+            <TextBlock Text="Список выставляемых коэффициентов" Margin="20" HorizontalAlignment="Center" FontWeight="Medium" FontSize="20"></TextBlock>
             <Border BorderThickness="1" BorderBrush="Black" CornerRadius="10" Margin="20 0 0 0">
             <ListView x:Name="ListViewCoef" Margin="100 0 0 0" Width="300" Height="300">
             <ListView.ItemTemplate>

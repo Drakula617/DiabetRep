@@ -7,8 +7,8 @@
       
       xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf" 
       mc:Ignorable="d" 
-      d:DesignHeight="1080" d:DesignWidth="1920"
-      Title="GraphLine" Background="Bisque">
+      d:DesignHeight="1080" d:DesignWidth="1920" 
+      Title="GraphLine" Background="White" ShowsNavigationUI="False">
 
     <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
 
@@ -24,14 +24,19 @@
                 <TabItem Header="Глюкоза">
                     <StackPanel Orientation="Horizontal">
 
-                        <lvc:CartesianChart x:Name="graphGluc"  Series="{Binding SeriesPointsGlucose, UpdateSourceTrigger=PropertyChanged}" Width="1300" Height="500">
+                        <lvc:CartesianChart x:Name="graphGluc"  Series="{Binding SeriesPointsGlucose, UpdateSourceTrigger=PropertyChanged}" FontWeight="Bold" Width="1300" Height="500" FontSize="25">
 
                             <lvc:CartesianChart.AxisX>
-                                <lvc:Axis Title="Время" Labels="{Binding TimesGluc}"   ShowLabels="True" />
+                                <lvc:Axis Title="Время" Labels="{Binding TimesGluc}" FontWeight="Bold" FontSize="25"/>
                             </lvc:CartesianChart.AxisX>
                             <lvc:CartesianChart.AxisY>
-                                <lvc:Axis Title="Глюкоза" MinValue="0" ShowLabels="True" />
+                                <lvc:Axis Title="Глюкоза" MinValue="0" FontSize="25" FontWeight="Bold" ShowLabels="True" />
                             </lvc:CartesianChart.AxisY>
+                            <lvc:CartesianChart.ChartLegend>
+                                <lvc:DefaultLegend Width="100" Height="100" Background="Black" FontWeight="Bold" BulletSize="20">
+
+                                </lvc:DefaultLegend>
+                            </lvc:CartesianChart.ChartLegend>
 
                         </lvc:CartesianChart>
 
@@ -57,7 +62,7 @@
                             </lvc:CartesianChart.ChartLegend>
 
                         </lvc:CartesianChart>
-                        <Button Click="Button_Click_1" Content="Новый коэффициент" Width="200" Cursor="Hand"></Button>
+                        <Button Click="Button_Click_1" Content="Новый коэффициент"  Cursor="Hand"></Button>
 
                     </StackPanel>
 
@@ -67,7 +72,7 @@
                     <StackPanel Orientation="Vertical" HorizontalAlignment="Right">
 
 
-                        <lvc:CartesianChart x:Name="graphBasal"  Series="{Binding SeriesPointsBasal}" Width="1000" Height="500" FontWeight="Bold" FontSize="25">
+                        <lvc:CartesianChart x:Name="graphBasal"  Series="{Binding SeriesPointsBasal, UpdateSourceTrigger=PropertyChanged}" Width="1300" Height="500" FontWeight="Bold" FontSize="25">
 
                             <lvc:CartesianChart.AxisX>
                                 <lvc:Axis Title="Время" Labels="{Binding TimesBasal}" FontSize="25" FontWeight="ExtraBold"/>
@@ -80,7 +85,7 @@
                             </lvc:CartesianChart.AxisY>
 
                         </lvc:CartesianChart>
-                        <TextBlock Text="{Binding SummBasal, UpdateSourceTrigger=PropertyChanged, StringFormat=0 ед/сут}" FontSize="35" Margin="0 20 0 20"></TextBlock>
+                        <TextBlock Text="{Binding SummBasal, UpdateSourceTrigger=PropertyChanged, StringFormat=0.00 ед/сут}" FontSize="35" Margin="0 20 0 20"></TextBlock>
 
                         <Button Click="Button_Click_2" Content="Новый коэффициент" Cursor="Hand"></Button>
 

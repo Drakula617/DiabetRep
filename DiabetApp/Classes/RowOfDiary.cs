@@ -38,10 +38,9 @@ namespace DiabetApp
             get { return diary_Products;}
             set { diary_Products = value; OnPropertyChanged("Diary_Products"); }
         }
-
         public double He
         {
-            get { return Math.Round(HECalculation(Diary_Products),1); }
+            get { return HECalculation(Diary_Products); }
             set { he = value; OnPropertyChanged("He"); }
         }
         public double Glucose
@@ -54,19 +53,16 @@ namespace DiabetApp
             get { return Math.Round(DoseCalculation(), 1); }
             set { dose = value; OnPropertyChanged("Dose"); }
         }
-
         public int Id_diary_person
         {
             get { return id_diary_person;}
             set { id_diary_person = value; OnPropertyChanged("Id_diary_person"); }
         }
-
         public GeneralDiary_Person Diary_Person
         {
             get { return diaty_person; }
             set { diaty_person = value;OnPropertyChanged("Diary_Person"); }
         }
-
         public double DoseHe
         {
             get { return Math.Round(DoseHeCalculation(),1); }
@@ -77,13 +73,11 @@ namespace DiabetApp
             get { return App.db.Dose_Profile.ToList().Find(c => c.Time_Begin <= Time && c.Time_End >= Time && c.Profile == App.diary_View.Selected_Profile && c.ID_Type_Coefficient == 2).Coefficient; }
             set { carbohydrates_Coef = (double)value; OnPropertyChanged("Carbohydrates_Coef"); }
         }
-
         public float? Basal
         {
             get { return App.db.Dose_Profile.ToList().Find(c => c.Time_Begin <= Time && c.Time_End >= Time && c.Profile == App.diary_View.Selected_Profile && c.ID_Type_Coefficient == 1).Coefficient; }
             set { basal = (double)value; OnPropertyChanged("Basal"); }
         }
-
         public double DoseLower
         {
             get
@@ -107,13 +101,11 @@ namespace DiabetApp
             }
             set { doseLower = value; OnPropertyChanged("DoseLower"); }
         }
-
         public bool IsDoseLower
         {
             get { return isDoseLower; }
             set { isDoseLower = value; OnPropertyChanged("IsDoseLower"); }
         }
-
         public float HECalculation(List<Diary_Product> diary_Product)
         {
             float he = 0;
@@ -125,12 +117,12 @@ namespace DiabetApp
             {
                 foreach (var item in diary_Product)
                 {
-                    he += (float)item.He;
+                    he += item.He;
+                    //he += (float)item.Grams * (float)item.Product.Carbohydrates/100/10;
                 }
                 return he;
             }
         }
-        
         public float DoseHeCalculation()
         {
             return (float)(He * Carbohydrates_Coef);
@@ -139,7 +131,6 @@ namespace DiabetApp
         {
             return (float)((Glucose - App.diary_View.Selected_Profile.MaxGlucose) / App.diary_View.Selected_Profile.Sensitivity);
         }
-
         public float DoseLowerCalculation()
         {
             
@@ -156,12 +147,10 @@ namespace DiabetApp
                 return 0;
             }
         }
-
-
-
         public float DoseCalculation()
         {
             float fulldose = (float)(DoseHeCalculation() + DoseLower);
+            
             if (fulldose < 0)
             {
                 return 0;
@@ -171,12 +160,10 @@ namespace DiabetApp
                 return fulldose;
             }
         }
-
         public string Dose_String()
         {
             return "";
         }
-
         public float ActiveDoseCalculation()
         {
 
@@ -196,8 +183,6 @@ namespace DiabetApp
                 return 0;
             }
         }
-
-
         public float ActiveDose
         {
             get
@@ -219,15 +204,5 @@ namespace DiabetApp
                  activeDose = value; OnPropertyChanged("ActiveDose");
             }
         }
-
-        public string Dose_calculation_str
-        {
-            get { return Dose_calculation_str; }
-            set { Dose_calculation_str = value; OnPropertyChanged("Dose_calculation_str"); }
-        }
-
-
-
-
     }
 }

@@ -39,6 +39,7 @@ namespace DiabetApp.Windows
         private void autoBasal_Click(object sender, RoutedEventArgs e)
         {
             basalList.DataContext = null;
+            profile.Dose_Profile.ToList().Where(c => c.ID_Type_Coefficient == 1).ToList().Clear();
             foreach (var item in profile.Dose_Profile.ToList())
             {
                 if(item.ID_Type_Coefficient == 1)
@@ -61,6 +62,7 @@ namespace DiabetApp.Windows
         private void autoCarb_Coef_Click(object sender, RoutedEventArgs e)
         {
             carbList.DataContext = null;
+            profile.Dose_Profile.ToList().Where(c => c.ID_Type_Coefficient == 2).ToList().Clear();
             foreach (var item in profile.Dose_Profile.ToList())
             {
                 if (item.ID_Type_Coefficient == 2)

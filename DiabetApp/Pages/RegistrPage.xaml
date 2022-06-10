@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:DiabetApp.Pages"
       mc:Ignorable="d"  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="700" d:DesignWidth="1200"
-      Title="RegistrPage" Background="White">
+      Title="RegistrPage" Background="White" ShowsNavigationUI="False">
     <Page.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="Width" Value="150"></Setter>
@@ -36,7 +36,7 @@
                                       materialDesign:TextFieldAssist.HasFilledTextField="True"
                                       materialDesign:TextFieldAssist.UnderlineCornerRadius="5"
                                       materialDesign:HintAssist.Hint="Имя" Width="220" Margin="0 0 0 20"
-                                      FontSize="18" TextChanged="FName_TextChanged" ></TextBox>
+                                      FontSize="18" TextChanged="FName_TextChanged" Cursor="Arrow" ></TextBox>
                                              <TextBox x:Name="LName"
                                              materialDesign:TextFieldAssist.UnderlineBrush="#3d54fc"
                                              materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
@@ -53,10 +53,7 @@
                                          materialDesign:TextFieldAssist.UnderlineCornerRadius="5"
                                          materialDesign:HintAssist.Hint="Отчество" Width="220" Margin="0 0 0 20"
                                          FontSize="18" TextChanged="FName_TextChanged" Cursor="Arrow"></TextBox>
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock  Text="Дата рождения" FontSize="20" FontWeight="Medium" ></TextBlock>
-                                    <DatePicker x:Name="age" FontSize="20" HorizontalContentAlignment="Center"  Width="200" Height="40" Margin="0,0,0,20"></DatePicker>
-                                </StackPanel>
+
 
                                 <TextBox x:Name="weigth"
                                      materialDesign:TextFieldAssist.UnderlineBrush="#3d54fc"
@@ -65,7 +62,7 @@
                                      materialDesign:TextFieldAssist.HasFilledTextField="True"
                                      materialDesign:TextFieldAssist.UnderlineCornerRadius="5"
                                      materialDesign:HintAssist.Hint="Вес(кг)" Width="220" Margin="0 0 0 20"
-                                     FontSize="18"></TextBox>
+                                     FontSize="18" Cursor="Arrow"></TextBox>
 
 
                             </StackPanel>
@@ -81,14 +78,14 @@
                          materialDesign:HintAssist.Hint="Логин" Width="220" Margin="0 0 0 20"
                          FontSize="18"></TextBox>
 
-                                    <TextBox x:Name="password"
+                                    <PasswordBox x:Name="password"
                                                                                                    materialDesign:TextFieldAssist.UnderlineBrush="#3d54fc"
                          materialDesign:TextFieldAssist.TextFieldCornerRadius="5"
                          materialDesign:TextFieldAssist.HasClearButton="True"
                          materialDesign:TextFieldAssist.HasFilledTextField="True"
                          materialDesign:TextFieldAssist.UnderlineCornerRadius="5"
                          materialDesign:HintAssist.Hint="Пароль" Width="220" Margin="0 0 0 20"
-                         FontSize="18"></TextBox>
+                         FontSize="18" Cursor="Arrow"></PasswordBox>
 
 
 

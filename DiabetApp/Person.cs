@@ -25,7 +25,6 @@ namespace DiabetApp
         public string FName { get; set; }
         public string LName { get; set; }
         public string MName { get; set; }
-        public Nullable<System.DateTime> DateOfBirth { get; set; }
         public Nullable<float> Weight { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }

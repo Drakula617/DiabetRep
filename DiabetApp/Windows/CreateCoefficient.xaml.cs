@@ -72,7 +72,10 @@ namespace DiabetApp.Windows
                 {
                     item.TimeEnd = item.TimeEnd.Add(-new TimeSpan(0, 0, 1));
                 }
-
+                if (item.TimeEnd >= new TimeSpan(1, 0, 0, 0))
+                {
+                    item.TimeEnd = new TimeSpan(23, 59, 59);
+                }
                 if (AddProfileWin.addprofwinopen == true)
                 {
                     AddProfileWin.profile.Dose_Profile.Add(new Dose_Profile()
@@ -133,18 +136,10 @@ namespace DiabetApp.Windows
                 {
                     item.TimeEnd = item.TimeEnd.Add(-new TimeSpan(0, 0, 1));
                 }
-                //if (item.TimeEnd >= new TimeSpan(1, 0, 0, 0))
-                //{
-                //    item.TimeEnd = new TimeSpan(23, 59, 59);
-                //}
-                //if (carbCoef.Last() == item && carbCoef.Count == 1)
-                //{
-                //    item.TimeEnd = item.TimeEnd;
-                //}
-                //if (carbCoef.First() != item)
-                //{
-                //    item.TimeBegin = item.TimeBegin.Add(TimeSpan.FromSeconds(1));
-                //}
+                if (item.TimeEnd >= new TimeSpan(1, 0, 0, 0))
+                {
+                    item.TimeEnd = new TimeSpan(23, 59, 59);
+                }
                 if (AddProfileWin.addprofwinopen == true)
                 {
                     AddProfileWin.profile.Dose_Profile.Add(new Dose_Profile()
@@ -193,6 +188,7 @@ namespace DiabetApp.Windows
                     { 
                         App.diary_View.UpdateGraph();
                         App.diary_View.collectionRowOfDiary.Refresh();
+                        App.diary_View.CalculationSummDose();
                     }
                     carbCoef.Clear();
                     nextbut.IsEnabled = false;

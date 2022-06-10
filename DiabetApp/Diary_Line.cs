@@ -22,9 +22,7 @@ namespace DiabetApp
     
         public int ID { get; set; }
         public Nullable<System.TimeSpan> Time { get; set; }
-        public Nullable<float> HE { get; set; }
         public Nullable<float> Glucose { get; set; }
-        public Nullable<float> Dose { get; set; }
         public Nullable<int> ID_GeneralDiary_Person { get; set; }
         public Nullable<bool> IsDoseLower { get; set; }
     

@@ -12,23 +12,28 @@ namespace DiabetApp
     using System;
     using System.Collections.Generic;
     
-    public partial class Profile
+    public partial class Profile: PropertyClass
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Profile()
         {
             this.Dose_Profile = new HashSet<Dose_Profile>();
         }
-    
+
+        public Nullable<float> maxGlucose;
+        public Nullable<float> minGlucose;
+        public Nullable<float> sensitivity;
+
+
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<int> ID_Person { get; set; }
-        public Nullable<float> MaxGlucose { get; set; }
-        public Nullable<float> MinGlucose { get; set; }
-        public Nullable<float> Sensitivity { get; set; }
+        public Nullable<float> MaxGlucose { get { return maxGlucose; } set { maxGlucose = value; OnPropertyChanged("MaxGlucose"); App.diary_View.collectionRowOfDiary.Refresh(); App.diary_View.CalculationSummDose(); } }
+        public Nullable<float> MinGlucose { get  {return minGlucose; } set {minGlucose =value; OnPropertyChanged("MinGlucose"); App.diary_View.collectionRowOfDiary.Refresh(); App.diary_View.CalculationSummDose(); }  }
+        public Nullable<float> Sensitivity { get {return sensitivity;} set {sensitivity=value; OnPropertyChanged("Sensitivity"); App.diary_View.collectionRowOfDiary.Refresh(); App.diary_View.CalculationSummDose(); }  }
     
-        public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Dose_Profile> Dose_Profile { get; set; }
+        public virtual Person Person { get; set; }
     }
 }

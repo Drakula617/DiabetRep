@@ -18,8 +18,11 @@ namespace DiabetApp
         public Nullable<int> ID_Diary_Line { get; set; }
         public Nullable<int> ID_Product { get; set; }
         public Nullable<float> Grams { get; set; }
-        public Nullable<float> He { get; set; }
-    
+        public float He
+        {
+            get { return (float)(Grams * Product.Carbohydrates / 100 / 10.00); }
+        }
+       
         public virtual Diary_Line Diary_Line { get; set; }
         public virtual Product Product { get; set; }
     }

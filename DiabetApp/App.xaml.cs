@@ -13,9 +13,8 @@ namespace DiabetApp
     public partial class App : Application
     {
         public static Window.AddProductInLine addProductInLine;
-        public static DiabetDBEntities1 db = new DiabetDBEntities1();
-        //public static u1683604_DiabetDBEntities db = new u1683604_DiabetDBEntities();
+        //public static DiabetDBEntities1 db = new DiabetDBEntities1();
+        public static u1683604_DiabetDBEntities1 db = new u1683604_DiabetDBEntities1();
         public static Diary_View diary_View = new Diary_View();
-       
     }
 }

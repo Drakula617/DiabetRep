@@ -171,19 +171,23 @@ namespace DiabetApp
 
 
         //Сумма коэффициентов за сутки
-        public float summCarbCoef = 0;
-        public float SummCarbCoef
-        {
-            get { return summCarbCoef; }
-            set { summCarbCoef = value; OnPropertyChanged("SummCarbCoef"); }
-        }
+        public float summDose = 0;
         public float summBasal = 0;
         public float SummBasal
         {
             get { return summBasal; }
             set { summBasal = value; OnPropertyChanged("SummBasal"); }
         }
-
+        public float SummDose
+        {
+            get { return summDose; }
+            set { summDose = value; OnPropertyChanged("SummDose"); }
+        }
+        public async void CalculationSummDose()
+        {
+            SummDose = (float)RowsOfDiary.ToList().Where(c => c.Diary_Person.Date == Selected_DateTime).ToList().Sum(c => c.Dose);
+            await Task.Delay(0);
+        }
 
         //загрузка списка продуктов
         public void ProductsAdd()
@@ -200,7 +204,7 @@ namespace DiabetApp
                     Fats = item.Fats,
                     Protein= item.Protein,
                     Glycemic_Index = item.Glycemic_Index,
-                    Glycemic_Index1 = item.Glycemic_Index1,
+
                     Type_Product = item.Type_Product,
                     ID_Type_Product = item.ID_Type_Product
                 });
@@ -261,7 +265,6 @@ namespace DiabetApp
                 foreach (var item in App.db.Diary_Line.ToList().Where(c => c.GeneralDiary_Person.ID_Person == Selected_Person.ID).ToList())
                 {
                     float he = 0;
-
                     foreach (var item2 in item.Diary_Product.ToList())
                     {
                         Diary_Products.Add(new Diary_Product()
@@ -269,7 +272,6 @@ namespace DiabetApp
                             ID = item2.ID,
                             Diary_Line = item2.Diary_Line,
                             Product = item2.Product,
-                            He = (float?)Math.Round((double)(item2.Product.Carbohydrates * item2.Grams / 100 / 10), 1),
                             Grams = item2.Grams,
                             ID_Product = item2.ID_Product,
                             ID_Diary_Line = item2.ID_Diary_Line
@@ -284,20 +286,19 @@ namespace DiabetApp
                         Diary_Products = item.Diary_Product.ToList(),
                         Id_diary_person = (int)item.ID_GeneralDiary_Person,
                         Diary_Person = item.GeneralDiary_Person,
-                        He = Math.Round(he,1),
                         Glucose = (double)item.Glucose,
                         IsDoseLower = (bool)item.IsDoseLower,
 
                     };
                     RowsOfDiary.Add(row);
-                            item.Time = row.Time;
-                            item.Glucose = (float?)row.Glucose;
-                            item.HE = (float?)Math.Round(row.He,1);
-                            item.Diary_Product = row.Diary_Products.ToList();
-                            item.Dose = (float?)row.Dose;
-                            item.ID_GeneralDiary_Person = row.Id_diary_person;
-                            item.GeneralDiary_Person = row.Diary_Person;
-                            item.IsDoseLower = row.IsDoseLower;
+                            //item.Time = row.Time;
+                            //item.Glucose = (float?)row.Glucose;
+
+                            //item.Diary_Product = row.Diary_Products.ToList();
+
+                            //item.ID_GeneralDiary_Person = row.Id_diary_person;
+                            //item.GeneralDiary_Person = row.Diary_Person;
+                            //item.IsDoseLower = row.IsDoseLower;
                 }
 
                 //ColumnSeries columnSeries = new ColumnSeries();
@@ -314,7 +315,6 @@ namespace DiabetApp
         //обновление журнала по выбранной дате
         public bool UpdateDatetime(object obj)
         {
-            
             RowOfDiary rowOfDiary = (RowOfDiary)obj;
             if (rowOfDiary.Diary_Person.Date == Selected_DateTime)
             {
@@ -340,9 +340,9 @@ namespace DiabetApp
             ChartValues<double> he = new ChartValues<double>();
             ChartValues<double> dose = new ChartValues<double>();
             LineSeries line = new LineSeries() { Title = "Сахар"};
-            
             ColumnSeries columnHe = new ColumnSeries() { Title = "ХЕ"};
             ColumnSeries columnDose = new ColumnSeries() { Title = "Доза"};
+            
             foreach (var item in RowsOfDiary.ToList().Where(c => c.Diary_Person.Date == Selected_DateTime).ToList())
             {
                 TimesGluc.Add(item.Time.ToString());
@@ -360,7 +360,7 @@ namespace DiabetApp
         public void GraphCoef()
         {
             SeriesPointsCoef = new SeriesCollection();
-            LineSeries line1 = new LineSeries();
+            LineSeries line1 = new LineSeries() { Title = "Коэф-т"};
             ChartValues<double> coef = new ChartValues<double>();
             TimesCoef.Clear();
             foreach (var item in CarbCoef.ToList())
@@ -376,13 +376,13 @@ namespace DiabetApp
         {
 
             SeriesPointsBasal = new SeriesCollection();
-            LineSeries line2 = new LineSeries();
+            LineSeries line2 = new LineSeries() { Title = "Коэф-т" };
             ChartValues<double> basal = new ChartValues<double>();
             
             TimesBasal.Clear();
             foreach (var item in App.diary_View.BasalCoef.ToList())
             {
-                basal.Add(Math.Round((double)item.Coef,1));
+                basal.Add(Math.Round((double)item.Coef,2));
                 TimesBasal.Add(item.TimeBegin.ToString());
             }
             line2.Values = basal;
@@ -392,7 +392,7 @@ namespace DiabetApp
         {
             BasalCoef.Clear();
             SummBasal = 0;
-            foreach (var item in App.db.Dose_Profile.ToList().Where(c=> c.ID_Profile == Selected_Profile.ID && c.ID_Type_Coefficient == 2))
+            foreach (var item in App.db.Dose_Profile.ToList().Where(c=> c.ID_Profile == Selected_Profile.ID && c.ID_Type_Coefficient == 1))
             {
                 BasalCoef.Add(new Coefficient()
                 {
@@ -407,7 +407,7 @@ namespace DiabetApp
         public void Carb_CoefLoad()
         {
             CarbCoef.Clear();
-            SummCarbCoef = 0;
+           
             foreach (var item in App.db.Dose_Profile.ToList().Where(c => c.ID_Profile == Selected_Profile.ID && c.ID_Type_Coefficient == 2))
             {
                 CarbCoef.Add(new Dose_Profile()
@@ -418,6 +418,7 @@ namespace DiabetApp
                     Coefficient = item.Coefficient
                 });
             }
+            App.diary_View.CalculationSummDose();
         }
 
         //Конструктор до авторизации
@@ -458,23 +459,18 @@ namespace DiabetApp
 
         //Загрузка данных для пользователя с выбранным профилем
         public void LoadDiaryView()
-        { 
-            //collectionProduct = CollectionViewSource.GetDefaultView(Products);
-            //collectionRowOfDiary = CollectionViewSource.GetDefaultView(RowsOfDiary);
-            //collectionDiary_Product = CollectionViewSource.GetDefaultView(Diary_Products);
-            //collectionProduct.Filter = FilterProduct;
+        {
             Type_ProductsAdd();
             ProductsAdd();
             RowOfDiaryAdd();
             
         }
-
-
         private void RowsOfDiary_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             collectionRowOfDiary.Refresh();
-            
+            App.diary_View.CalculationSummDose();
         }
+
 
 
         //Фильтрация продуктов по типу

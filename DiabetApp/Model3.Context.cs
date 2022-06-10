@@ -13,10 +13,10 @@ namespace DiabetApp
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class u1683604_DiabetDBEntities : DbContext
+    public partial class u1683604_DiabetDBEntities1 : DbContext
     {
-        public u1683604_DiabetDBEntities()
-            : base("name=u1683604_DiabetDBEntities")
+        public u1683604_DiabetDBEntities1()
+            : base("name=u1683604_DiabetDBEntities1")
         {
         }
     
@@ -25,15 +25,14 @@ namespace DiabetApp
             throw new UnintentionalCodeFirstException();
         }
     
-
         public virtual DbSet<Diary_Line> Diary_Line { get; set; }
         public virtual DbSet<Diary_Product> Diary_Product { get; set; }
+        public virtual DbSet<Dose_Profile> Dose_Profile { get; set; }
         public virtual DbSet<GeneralDiary_Person> GeneralDiary_Person { get; set; }
-        public virtual DbSet<Glycemic_Index> Glycemic_Index { get; set; }
         public virtual DbSet<Person> Person { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<Profile> Profile { get; set; }
-
+        public virtual DbSet<Type_Coefficient> Type_Coefficient { get; set; }
         public virtual DbSet<Type_Product> Type_Product { get; set; }
     }
 }

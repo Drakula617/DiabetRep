@@ -23,11 +23,9 @@ namespace DiabetApp
         public MainWindow()
         {
             InitializeComponent();
+            myFrame.Navigate(typeof(Pages.Authorized));
         }
 
-        private void Entrance_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
     }
 }

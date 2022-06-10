@@ -19,16 +19,16 @@ namespace DiabetApp.Windows
     /// </summary>
     public partial class CalculationDoseWin
     {
-        public CalculationDoseWin(RowOfDiary rowOfDiary)
+        public CalculationDoseWin()
         {
             InitializeComponent();
-            DataContext = rowOfDiary;
-            Sens.DataContext = App.diary_View.Selected_Profile;
-            MaxGK.DataContext = App.diary_View.Selected_Profile;
-            if(rowOfDiary.Diary_Products != null)
-            {
-                ListProduct.DataContext = rowOfDiary.Diary_Products.ToList();
-            }
+            DataContext = App.diary_View;
+            //Sens.DataContext = App.diary_View.Selected_Profile;
+            //MaxGK.DataContext = App.diary_View.Selected_Profile;
+            //if(rowOfDiary.Diary_Products != null)
+            //{
+            //    ListProduct.DataContext = rowOfDiary.Diary_Products.ToList();
+            //}
         }
 
         private void HeText_Initialized(object sender, EventArgs e)

@@ -4,8 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DiabetApp.Windows"
-        mc:Ignorable="d"
-        Title="CalculationDoseWin" Height="1050" Width="1900">
+        mc:Ignorable="d" ResizeMode="NoResize"
+        Title="CalculationDoseWin" Height="700" Width="1700" Background="White">
     <Window.Resources>
         <Style TargetType="TextBlock">
             <Setter Property="FontSize" Value="20"></Setter>
@@ -14,106 +14,105 @@
             <Setter Property="Margin" Value="10"></Setter>
         </Style>
         <Style TargetType="StackPanel">
-            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <!--<Setter Property="HorizontalAlignment" Value="Center"></Setter>-->
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
     </Window.Resources>
     <Grid>
-        <StackPanel Orientation="Horizontal" Height="1050" Width="1500">
-        <TextBlock Text="Доза =" Margin="0 80 0 0"></TextBlock>
-        <StackPanel Orientation="Vertical" >
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
-                <StackPanel Orientation="Vertical">
-                    <TextBlock x:Name="HeText" Text="{Binding He}"/>
-                    <TextBlock Text="ХЕ"/>
-                </StackPanel>
-                <TextBlock Text="x"/>
-                <StackPanel Orientation="Vertical">
-                        <TextBlock x:Name="CarbCoefText" Text="{Binding Carbohydrates_Coef}"/>
-                    <TextBlock Text="Углеводный коэффициент"/>
-                </StackPanel>
-            </StackPanel>
-            <TextBlock Text="=">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90" CenterY="45"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-                <TextBlock x:Name="ProductBolus" Text="{Binding DoseHe}"/>
-            <TextBlock Text="Пищевой болюс"/>
-            <TextBlock Text="=">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90" CenterY="45"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-            <ListView x:Name="ListProduct" ItemsSource="{Binding}">
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">
+            <TextBlock Text="Доза = " FontSize="30"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            
+             <StackPanel  Orientation="Vertical" HorizontalAlignment="Center">
+                <TextBlock Text="{Binding Selected_RowsOfDiary.DoseHe}" Margin="0 10 0 0"  FontSize="30"></TextBlock>
+                <TextBlock Text="Пищевой болюс" FontSize="30"></TextBlock>
+                <TextBlock Text="=" FontSize="30" Margin="60 0 0 0" VerticalAlignment="Bottom">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform Angle="90">
+
+                        </RotateTransform>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+             </StackPanel>
+            <TextBlock Text="+" FontSize="30"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right" VerticalAlignment="Center">
+            <ListView ItemsSource="{Binding Selected_RowsOfDiary.Diary_Products}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 20 0 0">
-                            <TextBlock Text="{Binding Product.Name}" Margin="0 10 10 0" FontSize="25"/>
-                            <TextBlock Text="{Binding Grams, StringFormat=0г углеводов}" Margin="0 10 0 0" FontSize="25"/>
-                            <TextBlock Text="= " FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10 0 10 0"/>
-                            <TextBlock Text="{Binding He, StringFormat=0.0 ХЕ}"  Margin="0 10 0 0" FontSize="25"/>
-                            <TextBlock/>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{Binding Product.Name}" FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding Grams, StringFormat= 0 г}" FontSize="20" Margin="10 0 0 0"></TextBlock>
+                            <TextBlock Text=" = " FontSize="20"></TextBlock>
+                            <TextBlock Text="{Binding He, StringFormat=0.0 ХЕ}" FontSize="20"></TextBlock>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
-        <TextBlock Text="+" ></TextBlock>
-        <StackPanel Orientation="Vertical">
-            <StackPanel Orientation="Horizontal" Margin="0 0 0 0">
-                <StackPanel Margin="100 0 0 0">
-                    <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
-                                <TextBlock x:Name="GK" Text="{Binding Glucose}"></TextBlock>
-                            <TextBlock Text="ГК"></TextBlock>
-                        </StackPanel>
-                        <TextBlock Text="-" ></TextBlock>
-                        <StackPanel Orientation="Vertical">
-                                <TextBlock x:Name="MaxGK" Text="{Binding MaxGlucose}"></TextBlock>
-                            <TextBlock Text="ЦУ ГК"></TextBlock>
-                        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <TextBlock Text="{Binding Selected_RowsOfDiary.He,StringFormat=0.0 ХЕ}"></TextBlock>
+            <TextBlock Text="X"></TextBlock>
+            <StackPanel>
+                <TextBlock Text="{Binding Selected_RowsOfDiary.Carbohydrates_Coef}"></TextBlock>
+                <TextBlock Text="Углеводный коэффициент"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="{Binding Selected_RowsOfDiary.DoseLower}" FontSize="30"></TextBlock>
+                <TextBlock Text="Корректирующий болюс" FontSize="30"></TextBlock>
+                <TextBlock Text="=" FontSize="30" Margin="60 0 0 0" VerticalAlignment="Bottom">
+                    <TextBlock.RenderTransform>
+                        <RotateTransform Angle="90">
+
+                        </RotateTransform>
+                    </TextBlock.RenderTransform>
+                </TextBlock>
+            </StackPanel>
+            <TextBlock Text="=" FontSize="30"></TextBlock>
+            <TextBlock Text="{Binding Selected_RowsOfDiary.Dose, StringFormat=0.0 ед}" FontSize="30" HorizontalAlignment="Left">
+
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center">
+            <StackPanel HorizontalAlignment="Center">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Selected_RowsOfDiary.Glucose}"></TextBlock>
+                        <TextBlock Text="ГК"></TextBlock>
                     </StackPanel>
-                    <Border BorderBrush="Black" Width="200" BorderThickness="2"></Border>
-                    <StackPanel Orientation="Vertical">
-                            <TextBlock x:Name="Sens" Text="{Binding Sensitivity}"></TextBlock>
-                        <TextBlock Text="Чувствительность"></TextBlock>
+                    <TextBlock Text=" - " ></TextBlock>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Selected_Profile.MaxGlucose}"></TextBlock>
+                        <TextBlock Text="ЦГК"></TextBlock>
                     </StackPanel>
                 </StackPanel>
-                <TextBlock Text="-"></TextBlock>
-                <StackPanel Orientation="Vertical">
-                        <TextBlock x:Name="activeText" Text="{Binding ActiveDose}"></TextBlock>
-                    <TextBlock Text="Активный инсулин"></TextBlock>
+                <StackPanel>
+                    <TextBlock Text="______________________"></TextBlock>
+                    <TextBlock Text="{Binding Selected_Profile.Sensitivity}"></TextBlock>
+                    <TextBlock Text="Чувствительность"></TextBlock>
                 </StackPanel>
             </StackPanel>
-            <TextBlock Text="=">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="90" CenterY="40"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-                <TextBlock x:Name="LowerBolus" Text="{Binding DoseLower}"></TextBlock>
-            <TextBlock Text="Корректируемый болюс" Margin="0 0 0 250"></TextBlock>
+            <TextBlock Text=" - "></TextBlock>
+            <StackPanel>
+                <TextBlock Text="{Binding Selected_RowsOfDiary.ActiveDose}"></TextBlock>
+                <TextBlock Text="Активный Инсулин"></TextBlock>
+            </StackPanel>
         </StackPanel>
-        <TextBlock Text="="></TextBlock>
-        <StackPanel Orientation="Horizontal">
-                <TextBlock x:Name="DoseText" Text="{Binding Dose}"></TextBlock>
-            <TextBlock Text="Ед."></TextBlock>
-        </StackPanel>
-    </StackPanel>
+
     </Grid>
 </Window>

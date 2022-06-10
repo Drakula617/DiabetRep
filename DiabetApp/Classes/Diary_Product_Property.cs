@@ -22,6 +22,7 @@ namespace DiabetApp
        public double protein;
        public double fats;
        public double carbohydrates;
+        public double he;
         public int Id
         {
             get { return id; }
@@ -97,6 +98,18 @@ namespace DiabetApp
             set { carbohydrates = value; OnPropertyChanged("Carbohydrates"); }
         }
 
+        public double HE
+        {
+            get
+            { 
+                return he;
+            }
+            set
+            {
+                he = value; OnPropertyChanged("HE");
+            }
+        }
+
         public void ProductCalculation()
         {
             if (Product != null)
@@ -106,6 +119,7 @@ namespace DiabetApp
                 Fats = Math.Round((double)(Product.Fats * gramm),1);
                 Calories = Math.Round((double)(Product.Calories * gramm),1);
                 Carbohydrates = Math.Round((double)(Product.Carbohydrates * gramm),1);
+                HE = Carbohydrates / 10;
             }
         }
 

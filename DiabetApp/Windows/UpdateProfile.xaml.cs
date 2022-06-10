@@ -21,6 +21,7 @@ namespace DiabetApp.Windows
     public partial class UpdateProfile
     {
         private static CheckInput check = new CheckInput();
+       
         public UpdateProfile()
         {
             InitializeComponent();
@@ -113,6 +114,61 @@ namespace DiabetApp.Windows
         private void basalText_GotFocus(object sender, RoutedEventArgs e)
         {
             check.Previous_number = (float)((sender as TextBox).DataContext as Dose_Profile).Coefficient;
+        }
+
+        private void autoCarb_Coef_Click(object sender, RoutedEventArgs e)
+        {
+            var message = MessageBox.Show("Удалить существующие коэффициенты и поставить новые?", "Предупреждение", MessageBoxButton.YesNo);
+            if (message == MessageBoxResult.Yes)
+            {
+                //carbList.DataContext = null;
+                App.db.Dose_Profile.RemoveRange(App.db.Dose_Profile.ToList().Where(c => c.Profile == App.diary_View.Selected_Profile && c.ID_Type_Coefficient == 2));
+                App.db.SaveChanges();
+                float wei = (float)App.diary_View.Selected_Person.Weight;
+                float OSD = wei / 2;
+                float coef = 450 / OSD / 10;
+                App.db.Dose_Profile.Add(new Dose_Profile()
+                {
+                    Profile = App.diary_View.Selected_Profile,
+                    ID_Profile = App.diary_View.Selected_Profile.ID,
+                    ID_Type_Coefficient = 2,
+                    Coefficient = coef,
+                    Time_Begin = new TimeSpan(0, 0, 0),
+                    Time_End = new TimeSpan(23, 59, 59)
+                });
+                App.db.SaveChanges();
+                carbList.DataContext = App.db.Dose_Profile.ToList().Where(c => c.ID_Type_Coefficient == 2 && c.Profile == App.diary_View.Selected_Profile);
+                App.diary_View.collectionRowOfDiary.Refresh();
+                App.diary_View.UpdateGraph();
+                App.diary_View.CalculationSummDose();
+            }
+        }
+
+        private void autoBasal_Click(object sender, RoutedEventArgs e)
+        {
+            var message = MessageBox.Show("Удалить существующие коэффициенты и поставить новые?", "Предупреждение", MessageBoxButton.YesNo);
+            if (message == MessageBoxResult.Yes)
+            {
+                App.db.Dose_Profile.RemoveRange(App.db.Dose_Profile.ToList().Where(c => c.Profile == App.diary_View.Selected_Profile && c.ID_Type_Coefficient == 1));
+                App.db.SaveChanges();
+                float wei = (float)App.diary_View.Selected_Person.Weight;
+                float OSD = wei / 2;
+                float basalcoef = (float)(OSD / 24 / 4);
+                App.db.Dose_Profile.Add(new Dose_Profile()
+                {
+                    Profile = App.diary_View.Selected_Profile,
+                    ID_Profile = App.diary_View.Selected_Profile.ID,
+                    ID_Type_Coefficient = 2,
+                    Coefficient = basalcoef,
+                    Time_Begin = new TimeSpan(0, 0, 0),
+                    Time_End = new TimeSpan(23, 59, 59)
+                });
+                App.db.SaveChanges();
+                basalList.DataContext = App.db.Dose_Profile.ToList().Where(c => c.ID_Type_Coefficient == 1 && c.Profile == App.diary_View.Selected_Profile);
+                App.diary_View.collectionRowOfDiary.Refresh();
+                App.diary_View.UpdateGraph();
+                App.diary_View.CalculationSummDose();
+            }
         }
     }
 }

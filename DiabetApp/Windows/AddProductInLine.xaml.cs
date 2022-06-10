@@ -56,36 +56,18 @@ namespace DiabetApp.Window
             {
                 Product = diary.Product,
                 ID_Diary_Line = App.diary_View.Selected_RowsOfDiary.Id,
-                Grams = (float)Convert.ToDouble(diary.Gramm),
-                He = diary.Product.Carbohydrates * (float)Convert.ToDouble(diary.Gramm) / 100 / 10
+                Grams = (float)Convert.ToDouble(diary.Gramm)
             });
             App.db.SaveChanges();
             App.diary_View.Selected_RowsOfDiary.Diary_Products.Add(addDiary_Produact);
             App.diary_View.collectionRowOfDiary.Refresh();
+            App.diary_View.CalculationSummDose();
         }
 
         private static string gramtextError = string.Empty;
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //try
-            //{
-            //    if (Convert.ToDouble(gramText.Text) >= 0)
-            //    {
-            //        gramtextError = gramText.Text;
-            //        Diary_Product_Property diary_Product_Property = App.diary_View.Selected_Diary_Product_Property;
-            //        diary_Product_Property.Gramm =  gramtextError;
-            //        App.diary_View.Selected_Diary_Product_Property = diary_Product_Property;
-            //    }
-            //    else
-            //    {
-            //        gramText.Text = gramtextError;
-            //    }
-            //}
-            //catch
-            //{
-            //    gramText.Text = gramtextError;
-            //}
 
         }
 

@@ -64,10 +64,10 @@ namespace DiabetApp.Pages
                 FName = FName.Text,
                 LName = LName.Text,
                 MName = MName.Text,
-                DateOfBirth = age.SelectedDate,
-                Weight = Convert.ToInt32(weigth.Text),
+                
+                Weight = (float?)Convert.ToDouble(weigth.Text),
                 Login = login.Text,
-                Password = password.Text
+                Password = password.Password
             });
             App.db.SaveChanges();
             MessageBox.Show("Регистрация прошла успешно");

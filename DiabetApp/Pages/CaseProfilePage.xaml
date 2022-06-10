@@ -5,10 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DiabetApp.Pages"
       mc:Ignorable="d"
-      d:DesignHeight="1000" d:DesignWidth="1900"
-      Title="CaseProfilePage" Background="White">
+      d:DesignHeight="800" d:DesignWidth="1300"
+      Title="CaseProfilePage" Background="White" ShowsNavigationUI="False">
 
-    <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
+    <Grid>
+        <StackPanel  Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" >
         <StackPanel Orientation="Horizontal">
             <ListView x:Name="ProfileList" ItemsSource="{Binding Profiles}" Width="1000" Height="500" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListView.ItemsPanel>
@@ -22,19 +23,19 @@
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
                                 <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="20">
                                      <StackPanel Orientation="Horizontal" Margin="20">
-                                        <TextBlock Text="Имя" FontSize="20" Width="70"></TextBlock>
+                                        <TextBlock Text="Название" FontSize="20"></TextBlock>
                                         <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" Margin="20 0 0 0"></TextBlock>
                                      </StackPanel>
                                      <StackPanel Orientation="Horizontal" Margin="20">
-                                        <TextBlock Text="Чув-ность" FontSize="20" Width="100"></TextBlock>
+                                        <TextBlock Text="Чувствительность" FontSize="20" ></TextBlock>
                                         <TextBlock Text="{Binding Sensitivity}" FontSize="20" Margin="20 0 0 0"></TextBlock>
                                      </StackPanel>
                                      <StackPanel Orientation="Horizontal" Margin="20">
-                                        <TextBlock Text="Мин ГК" FontSize="20" Width="70"></TextBlock>
+                                        <TextBlock Text="Минимальная ГК" FontSize="20" ></TextBlock>
                                         <TextBlock Text="{Binding MinGlucose}" FontSize="20" Margin="20 0 0 0"></TextBlock>
                                      </StackPanel>
                                      <StackPanel Orientation="Horizontal" Margin="20">
-                                        <TextBlock Text="Макс ГК" FontSize="20" Width="80"></TextBlock>
+                                        <TextBlock Text="Максимальная ГК" FontSize="20"></TextBlock>
                                          <TextBlock Text="{Binding MaxGlucose}" FontSize="20" Margin="20 0 0 0"></TextBlock>
                                      </StackPanel>
                                 </StackPanel>
@@ -53,4 +54,5 @@
             </StackPanel>
         </StackPanel>
     </StackPanel>
+    </Grid>
 </Page>

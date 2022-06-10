@@ -60,11 +60,14 @@ namespace DiabetApp.Pages
         private void removeprod_Click(object sender, RoutedEventArgs e)
         {
             Diary_Product diary_Product = (sender as Button).DataContext as Diary_Product;
+            App.diary_View.Selected_RowsOfDiary = LineLIst.SelectedItem as RowOfDiary;
+            App.diary_View.Selected_RowsOfDiary.Diary_Products.Remove(diary_Product);
             App.db.Diary_Product.Remove(diary_Product);
             App.db.SaveChanges();
             //App.diary_View.Diary_LinesAdd();
-            App.diary_View.RowOfDiaryAdd();
-            
+            //App.diary_View.RowOfDiaryAdd();
+            App.diary_View.collectionRowOfDiary.Refresh();
+            App.diary_View.CalculationSummDose();
         }
 
 
@@ -98,6 +101,7 @@ namespace DiabetApp.Pages
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             NavigationService.Navigate(new Pages.GraphLine());
+            App.diary_View.UpdateGraph();
         }
 
         private void glucoseText_GotFocus(object sender, RoutedEventArgs e)
@@ -127,12 +131,14 @@ namespace DiabetApp.Pages
                 App.db.SaveChanges();
                 App.diary_View.RowsOfDiary.Remove(App.diary_View.Selected_RowsOfDiary);
                 App.diary_View.collectionRowOfDiary.Refresh();
+                App.diary_View.CalculationSummDose();
             }
         }
 
         private void calculation_Click_1(object sender, RoutedEventArgs e)
         {
-            Windows.CalculationDoseWin doseWin = new Windows.CalculationDoseWin((sender as Button).DataContext as RowOfDiary);
+            App.diary_View.Selected_RowsOfDiary = (sender as Button).DataContext as RowOfDiary;
+            Windows.CalculationDoseWin doseWin = new Windows.CalculationDoseWin();
             doseWin.Show();
         }
 
@@ -141,9 +147,9 @@ namespace DiabetApp.Pages
             NavigationService.Navigate(new CaseProfilePage());
         }
 
-        private void checkDose_Click(object sender, RoutedEventArgs e)
+        private async void checkDose_Click(object sender, RoutedEventArgs e)
         {
-
+            await Task.Delay(0);
             App.diary_View.Selected_RowsOfDiary = (sender as CheckBox).DataContext as RowOfDiary;
             if (App.diary_View.Selected_RowsOfDiary.IsDoseLower == true)
             {
@@ -172,6 +178,7 @@ namespace DiabetApp.Pages
                 }
             }
             App.diary_View.collectionRowOfDiary.Refresh();
+            App.diary_View.CalculationSummDose();
         }
     }
 }
